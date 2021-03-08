@@ -1,19 +1,21 @@
 import Route from '@ember/routing/route';
-import {products} from '../data/products'
+import { products } from '../data/products';
 
 export default class ItemRoute extends Route {
-  model(params) {
-    const {
-      item_id
-    } = params;
+  async model(params) {
+    const { item_id } = params;
 
-    const product = products.find(({id}) => id === item_id);
+    const response = await fetch('http://localhost:3000/products');
+    const { data } = await response.json();
+
+
+    // const product = products.find(({ id }) => id === item_id);
     // const product = products.find(prod => prod.id === item_id);
-    return product;
+    return data;
   }
 
   setupController(controller, model) {
     super.setupController(controller, model);
-    controller.color = model.colors[0].color; 
+    controller.color = model.colors[0].color;
   }
 }
