@@ -6,7 +6,8 @@ export default class ItemRoute extends Route {
     const { item_id } = params;
 
     const response = await fetch('http://localhost:3000/products');
-    const { data } = await response.json();
+    let { data } = await response.json();
+    data = data.map(item => item.attributes);
 
 
     // const product = products.find(({ id }) => id === item_id);
